@@ -1,13 +1,21 @@
 using System;
 using stackunderflow.Models;
+using stackunderflow.Repositories;
 
 namespace stackunderflow.Services
 {
   public class QuestionsService
   {
+    private readonly QuestionsRepository _repo;
+
+    public QuestionsService(QuestionsRepository repo)
+    {
+      _repo = repo;
+    }
+
     internal object Get()
     {
-      throw new NotImplementedException();
+      return _repo.Get();
     }
 
     internal object Get(int id)

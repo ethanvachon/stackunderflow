@@ -11,9 +11,12 @@ namespace stackunderflow.Models
     [Required]
     public string Posted { get; set; }
     [Required]
+    public int QuestionId { get; set; }
+    [Required]
     public string Body { get; set; }
     [Required]
     public string CreatorId { get; set; }
     public Profile Creator { get; set; }
+    public Question Question { get; set; }
   }
 }

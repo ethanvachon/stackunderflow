@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using CodeWorks.Auth0Provider;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using stackunderflow.Models;
 using stackunderflow.Services;
@@ -47,7 +49,8 @@ namespace stackunderflow.Controllers
     {
       try
       {
-        return Ok(_as.Post());
+        newAnswer.Rating = 0;
+        return Ok(_as.Post(newAnswer));
       }
       catch (System.Exception e)
       {
@@ -56,11 +59,15 @@ namespace stackunderflow.Controllers
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Answer> Edit(int id, [FromBody] Answer newAnswer)
+    [Authorize]
+    public async System.Threading.Tasks.Task<ActionResult<Answer>> EditAsync(int id, [FromBody] Answer newAnswer)
     {
       try
       {
-        return Ok(_as.Edit(newAnswer, id));
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        newAnswer.Id = id;
+        newAnswer.CreatorId = userInfo.Id;
+        return Ok(_as.Edit(newAnswer, userInfo.Id));
       }
       catch (System.Exception e)
       {

@@ -15,31 +15,41 @@ namespace stackunderflow.Services
 
     internal object Get()
     {
-      throw new NotImplementedException();
+      return _repo.Get();
     }
     internal object Get(int id)
     {
-      throw new NotImplementedException();
+      return _repo.Get(id);
     }
 
-    internal object Post()
+    internal Answer Post(Answer newAnswer)
     {
-      throw new NotImplementedException();
+      newAnswer.Id = _repo.Post(newAnswer);
+      return newAnswer;
+    }
+
+    internal Answer Edit(Answer newAnswer, string userId)
+    {
+      Answer preEdit = _repo.Get(newAnswer.Id);
+      if (preEdit == null)
+      {
+        throw new Exception("invalid id");
+      }
+      if (preEdit.CreatorId != userId)
+      {
+        throw new Exception("cannot edit keep if you aren't the creator");
+      }
+      return _repo.Edit(newAnswer);
     }
 
     internal void Delete(int id)
     {
-      throw new NotImplementedException();
-    }
-
-    internal object Edit(Answer newAnswer, int id)
-    {
-      throw new NotImplementedException();
+      _repo.Delete(id);
     }
 
     internal object GetByQuestion(int id)
     {
-      throw new NotImplementedException();
+      return _repo.GetByQuestion(id);
     }
   }
 }

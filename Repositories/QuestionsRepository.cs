@@ -76,7 +76,7 @@ namespace stackunderflow.Repositories
 
     internal void Delete(int id)
     {
-      string sql = "REMOVE FROM questions WHERE id = @id LIMIT 1;";
+      string sql = "DELETE FROM questions WHERE id = @id LIMIT 1;";
       _db.Execute(sql, new { id });
     }
   }

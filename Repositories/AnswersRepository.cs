@@ -21,10 +21,12 @@ namespace stackunderflow.Repositories
       string sql = @"
       SELECT
       a.*,
-      pr.*
+      pr.*,
+      q.*
       FROM answers a 
-      JOIN profiles pr ON a.creatorId = pr.id;";
-      return _db.Query<Answer, Profile, Answer>(sql, (answer, profile) => { answer.Creator = profile; return answer; }, splitOn: "id");
+      JOIN profiles pr ON a.creatorId = pr.id
+      JOIN questions q ON a.questionId;";
+      return _db.Query<Answer, Profile, Question, Answer>(sql, (answer, profile, question) => { answer.Creator = profile; answer.Question = question; return answer; }, splitOn: "id");
     }
 
     internal Answer Get(int id)
@@ -43,9 +45,9 @@ namespace stackunderflow.Repositories
     {
       string sql = @"
       INSERT INTO answers
-      (creatorId, rating, posted, body)
+      (creatorId, rating, posted, body, questionId)
       VALUES
-      (@CreatorId, @Rating, @Posted, @Body);
+      (@CreatorId, @Rating, @Posted, @Body, @QuestionId);
       SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newAnswer);
     }
@@ -66,11 +68,13 @@ namespace stackunderflow.Repositories
       string sql = @"
       SELECT
       a.*,
-      pr.*
+      pr.*,
+      q.*
       FROM answers a
       JOIN profiles pr ON a.creatorId = pr.id
+      JOIN questions q ON a.questionId = q.id
       WHERE a.creatorId = @id;";
-      return _db.Query<Answer, Profile, Answer>(sql, (answer, profile) => { answer.Creator = profile; return answer; }, new { id }, splitOn: "id");
+      return _db.Query<Answer, Profile, Question, Answer>(sql, (answer, profile, question) => { answer.Creator = profile; answer.Question = question; return answer; }, new { id }, splitOn: "id");
     }
 
     internal void Delete(int id)
@@ -84,11 +88,13 @@ namespace stackunderflow.Repositories
       string sql = @"
       SELECT
       a.*,
-      q.*
+      q.*,
+      pr.*
       FROM answers a
       JOIN questions q ON a.questionId = q.id
+      JOIN profiles pr ON a.creatorId = pr.id
       WHERE questionId = @id;";
-      return _db.Query<Answer, Question, Answer>(sql, (answer, question) => { answer.Question = question; return answer; }, new { id }, splitOn: "id");
+      return _db.Query<Answer, Question, Profile, Answer>(sql, (answer, question, profile) => { answer.Question = question; answer.Creator = profile; return answer; }, new { id }, splitOn: "id");
     }
   }
 }

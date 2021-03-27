@@ -20,7 +20,12 @@ namespace stackunderflow.Services
     }
     internal object Get(int id)
     {
-      return _repo.Get(id);
+      Answer answer = _repo.Get(id);
+      if (answer == null)
+      {
+        throw new Exception("invalid id");
+      }
+      return answer;
     }
 
     internal Answer Post(Answer newAnswer)

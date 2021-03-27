@@ -48,7 +48,7 @@ namespace stackunderflow.Controllers
       }
     }
     [HttpGet("{id}/answers")]
-    public ActionResult<IEnumerable<Question>> GetAnswers(string id)
+    public ActionResult<IEnumerable<Answer>> GetAnswers(string id)
     {
       try
       {

@@ -23,7 +23,7 @@ namespace stackunderflow.Repositories
       q.*,
       pr.*
       FROM questions q
-      JOIN profiles pr ON p.creatorId = pr.id;";
+      JOIN profiles pr ON q.creatorId = pr.id;";
       return _db.Query<Question, Profile, Question>(sql, (question, profile) => { question.Creator = profile; return question; }, splitOn: "id");
     }
 

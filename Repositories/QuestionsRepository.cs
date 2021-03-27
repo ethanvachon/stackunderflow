@@ -1,34 +1,71 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using Dapper;
 using stackunderflow.Models;
 
 namespace stackunderflow.Repositories
 {
   public class QuestionsRepository
   {
+    private readonly IDbConnection _db;
+
+    public QuestionsRepository(IDbConnection db)
+    {
+      _db = db;
+    }
+
     internal IEnumerable<Question> Get()
     {
-      throw new NotImplementedException();
+      string sql = @"
+      SELECT
+      q.*,
+      pr.*
+      FROM questions q
+      JOIN profiles pr ON p.creatorId = pr.id;";
+      return _db.Query<Question, Profile, Question>(sql, (question, profile) => { question.Creator = profile; return question; }, splitOn: "id");
     }
 
     internal Question Get(int id)
     {
-      throw new NotImplementedException();
+      string sql = @"
+      SELECT 
+      q.*,
+      pr.*
+      FROM questions q
+      JOIN profiles pr ON q.creatorId = pr.id
+      WHERE id = @id;";
+      return _db.Query<Question, Profile, Question>(sql, (question, profile) => { question.Creator = profile; return question; }, new { id }, splitOn: "id").FirstOrDefault();
     }
 
     internal int Create(Question newQuestion)
     {
-      throw new NotImplementedException();
+      string sql = @"
+      INSERT INTO questions
+      (rating, posted, title, body, creatorId)
+      VAULES 
+      (@Rating, @posted, @title, @body, @creatorId)
+      SELECT LAST_INSERT_ID();";
+      return _db.ExecuteScalar<int>(sql, newQuestion);
     }
 
     internal object Edit(Question newQuestion)
     {
-      throw new NotImplementedException();
+      string sql = @"
+      UPDATE questions
+      SET
+      title = @Title,
+      body = @Body
+      WHERE id = @id;";
+      _db.Execute(sql, newQuestion);
+      return newQuestion;
     }
 
     internal void Delete(int id)
     {
-      throw new NotImplementedException();
+      string sql = "REMOVE FROM questions WHERE id = @id LIMIT 1;";
+      _db.Execute(sql, new { id });
     }
   }
 }

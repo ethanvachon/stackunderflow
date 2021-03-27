@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using stackunderflow.Models;
 using stackunderflow.Repositories;
 
@@ -57,12 +58,12 @@ namespace stackunderflow.Services
       return "deleted";
     }
 
-    internal object GetByProfile(string id)
+    internal IEnumerable<Answer> GetByProfile(string id)
     {
-      throw new NotImplementedException();
+      return _repo.GetByProfile(id);
     }
 
-    internal object GetByQuestion(int id)
+    internal IEnumerable<Answer> GetByQuestion(int id)
     {
       return _repo.GetByQuestion(id);
     }

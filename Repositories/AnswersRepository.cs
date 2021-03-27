@@ -61,13 +61,25 @@ namespace stackunderflow.Repositories
       return newAnswer;
     }
 
+    internal IEnumerable<Answer> GetByProfile(string id)
+    {
+      string sql = @"
+      SELECT
+      a.*,
+      pr.*
+      FROM answers a
+      JOIN profiles pr ON a.creatorId = pr.id
+      WHERE a.creatorId = @id;";
+      return _db.Query<Answer, Profile, Answer>(sql, (answer, profile) => { answer.Creator = profile; return answer; }, new { id }, splitOn: "id");
+    }
+
     internal void Delete(int id)
     {
       string sql = "DELETE FROM answers WHERE id = @id LIMIT 1";
       _db.Execute(sql, new { id });
     }
 
-    internal object GetByQuestion(int id)
+    internal IEnumerable<Answer> GetByQuestion(int id)
     {
       string sql = @"
       SELECT

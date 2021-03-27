@@ -50,6 +50,18 @@ namespace stackunderflow.Repositories
       return _db.ExecuteScalar<int>(sql, newQuestion);
     }
 
+    internal IEnumerable<Question> GetByProfile(string id)
+    {
+      string sql = @"
+      SELECT 
+      q.*,
+      pr.*
+      FROM questions q
+      JOIN profiles pr ON q.creatorId = pr.id
+      WHERE q.creatorId = @id;";
+      return _db.Query<Question, Profile, Question>(sql, (question, profile) => { question.Creator = profile; return question; }, new { id }, splitOn: "id");
+    }
+
     internal object Edit(Question newQuestion)
     {
       string sql = @"

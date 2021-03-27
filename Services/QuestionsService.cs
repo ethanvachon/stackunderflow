@@ -49,9 +49,9 @@ namespace stackunderflow.Services
       return _repo.Edit(newQuestion);
     }
 
-    internal object GetByProfile(string id)
+    internal IEnumerable<Question> GetByProfile(string id)
     {
-      throw new NotImplementedException();
+      return _repo.GetByProfile(id);
     }
 
     internal string Delete(int id, string userId)

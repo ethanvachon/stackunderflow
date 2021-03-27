@@ -75,6 +75,7 @@ namespace stackunderflow.Controllers
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         newQuestion.Id = id;
         newQuestion.CreatorId = userInfo.Id;
+        newQuestion.Creator = userInfo;
         return Ok(_qs.Edit(newQuestion, userInfo.Id));
       }
       catch (System.Exception e)

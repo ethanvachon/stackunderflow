@@ -35,7 +35,7 @@ namespace stackunderflow.Repositories
       pr.*
       FROM questions q
       JOIN profiles pr ON q.creatorId = pr.id
-      WHERE id = @id;";
+      WHERE q.id = @id;";
       return _db.Query<Question, Profile, Question>(sql, (question, profile) => { question.Creator = profile; return question; }, new { id }, splitOn: "id").FirstOrDefault();
     }
 
@@ -44,8 +44,8 @@ namespace stackunderflow.Repositories
       string sql = @"
       INSERT INTO questions
       (rating, posted, title, body, creatorId)
-      VAULES 
-      (@Rating, @posted, @title, @body, @creatorId)
+      VALUES 
+      (@Rating, @posted, @title, @body, @creatorId);
       SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newQuestion);
     }

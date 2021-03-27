@@ -49,6 +49,11 @@ namespace stackunderflow.Services
       return _repo.Edit(newQuestion);
     }
 
+    internal object GetByProfile(string id)
+    {
+      throw new NotImplementedException();
+    }
+
     internal string Delete(int id, string userId)
     {
       Question preDelete = _repo.Get(id);

@@ -57,6 +57,11 @@ namespace stackunderflow.Services
       return "deleted";
     }
 
+    internal object GetByProfile(string id)
+    {
+      throw new NotImplementedException();
+    }
+
     internal object GetByQuestion(int id)
     {
       return _repo.GetByQuestion(id);

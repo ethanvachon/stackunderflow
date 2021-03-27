@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using CodeWorks.Auth0Provider;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using stackunderflow.Models;
 using stackunderflow.Services;
@@ -46,11 +48,17 @@ namespace stackunderflow.Controllers
     }
 
     [HttpPost]
-    public ActionResult<Question> Post([FromBody] Question newQuestion)
+    [Authorize]
+    public async System.Threading.Tasks.Task<ActionResult<Question>> Post([FromBody] Question newQuestion)
     {
       try
       {
-        return Ok(_qs.Post());
+        newQuestion.Rating = 0;
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        newQuestion.CreatorId = userInfo.Id;
+        Question question = _qs.Post(newQuestion);
+        question.Creator = userInfo;
+        return Ok(question);
       }
       catch (System.Exception e)
       {
@@ -59,11 +67,15 @@ namespace stackunderflow.Controllers
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Question> Edit(int id, [FromBody] Question newQuestion)
+    [Authorize]
+    public async System.Threading.Tasks.Task<ActionResult<Question>> EditAsync(int id, [FromBody] Question newQuestion)
     {
       try
       {
-        return Ok(_qs.Edit(newQuestion, id));
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        newQuestion.Id = id;
+        newQuestion.CreatorId = userInfo.Id;
+        return Ok(_qs.Edit(newQuestion, userInfo.Id));
       }
       catch (System.Exception e)
       {
@@ -72,12 +84,13 @@ namespace stackunderflow.Controllers
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<string> Delete(int id)
+    [Authorize]
+    public async System.Threading.Tasks.Task<ActionResult<string>> DeleteAsync(int id)
     {
       try
       {
-        _qs.Delete(id);
-        return Ok("deleted");
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        return Ok(_qs.Delete(id, userInfo.Id));
       }
       catch (System.Exception e)
       {

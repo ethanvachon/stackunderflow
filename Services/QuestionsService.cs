@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using stackunderflow.Models;
 using stackunderflow.Repositories;
 
@@ -13,29 +14,54 @@ namespace stackunderflow.Services
       _repo = repo;
     }
 
-    internal object Get()
+    internal IEnumerable<Question> Get()
     {
       return _repo.Get();
     }
 
-    internal object Get(int id)
+    internal Question Get(int id)
     {
-      throw new NotImplementedException();
+      Question question = _repo.Get(id);
+      if (question == null)
+      {
+        throw new Exception("invalid id");
+      }
+      return question;
     }
 
-    internal object Post()
+    internal Question Post(Question newQuestion)
     {
-      throw new NotImplementedException();
+      newQuestion.Id = _repo.Create(newQuestion);
+      return newQuestion;
     }
 
-    internal object Edit(Question newQuestion, int id)
+    internal object Edit(Question newQuestion, string id)
     {
-      throw new NotImplementedException();
+      Question preEdit = _repo.Get(newQuestion.Id);
+      if (preEdit == null)
+      {
+        throw new Exception("invalid id");
+      }
+      if (preEdit.CreatorId != id)
+      {
+        throw new Exception("cannot edit if you are not the creator");
+      }
+      return _repo.Edit(newQuestion);
     }
 
-    internal void Delete(int id)
+    internal string Delete(int id, string userId)
     {
-      throw new NotImplementedException();
+      Question preDelete = _repo.Get(id);
+      if (preDelete == null)
+      {
+        throw new Exception("invalid id");
+      }
+      if (preDelete.CreatorId != userId)
+      {
+        throw new Exception("cannot delete if you are not the creator");
+      }
+      _repo.Delete(id);
+      return "deleted";
     }
   }
 }

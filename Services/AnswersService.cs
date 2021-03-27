@@ -42,9 +42,19 @@ namespace stackunderflow.Services
       return _repo.Edit(newAnswer);
     }
 
-    internal void Delete(int id)
+    internal string Delete(int id, string userId)
     {
+      Answer preDelete = _repo.Get(id);
+      if (preDelete == null)
+      {
+        throw new Exception("invalid id");
+      }
+      if (preDelete.CreatorId != userId)
+      {
+        throw new Exception("cannot delete if you are not the creator");
+      }
       _repo.Delete(id);
+      return "deleted";
     }
 
     internal object GetByQuestion(int id)

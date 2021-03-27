@@ -45,12 +45,17 @@ namespace stackunderflow.Controllers
     }
 
     [HttpPost]
-    public ActionResult<Answer> Post([FromBody] Answer newAnswer)
+    [Authorize]
+    public async System.Threading.Tasks.Task<ActionResult<Answer>> PostAsync([FromBody] Answer newAnswer)
     {
       try
       {
         newAnswer.Rating = 0;
-        return Ok(_as.Post(newAnswer));
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        newAnswer.CreatorId = userInfo.Id;
+        Answer answer = _as.Post(newAnswer);
+        answer.Creator = userInfo;
+        return answer;
       }
       catch (System.Exception e)
       {
@@ -76,11 +81,13 @@ namespace stackunderflow.Controllers
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<string> Delete(int id)
+    [Authorize]
+    public async System.Threading.Tasks.Task<ActionResult<string>> DeleteAsync(int id)
     {
       try
       {
-        _as.Delete(id);
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        _as.Delete(id, userInfo.Id);
         return Ok("deleted");
       }
       catch (System.Exception e)

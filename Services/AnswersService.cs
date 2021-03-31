@@ -72,5 +72,22 @@ namespace stackunderflow.Services
     {
       return _repo.GetByQuestion(id);
     }
+
+    internal void AddRating(int id, string rating)
+    {
+      Answer answer = _repo.Get(id);
+      if (answer == null)
+      {
+        throw new Exception("invalid id");
+      }
+      if (rating == "down")
+      {
+        _repo.AddRating(id, answer.Rating - 1);
+      }
+      if (rating == "up")
+      {
+        _repo.AddRating(id, answer.Rating + 1);
+      }
+    }
   }
 }

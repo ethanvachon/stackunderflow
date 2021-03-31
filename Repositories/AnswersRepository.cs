@@ -77,6 +77,16 @@ namespace stackunderflow.Repositories
       return _db.Query<Answer, Profile, Question, Answer>(sql, (answer, profile, question) => { answer.Creator = profile; answer.Question = question; return answer; }, new { id }, splitOn: "id");
     }
 
+    internal void AddRating(int id, int rating)
+    {
+      string sql = @"
+      UPDATE answers
+      SET
+      rating = @rating
+      WHERE id = @id;";
+      _db.Execute(sql, new { rating, id });
+    }
+
     internal void Delete(int id)
     {
       string sql = "DELETE FROM answers WHERE id = @id LIMIT 1";

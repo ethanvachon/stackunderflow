@@ -95,5 +95,36 @@ namespace stackunderflow.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    [HttpPut("{id}/up")]
+    [Authorize]
+    public async System.Threading.Tasks.Task<ActionResult<string>> AddRatingUp(int id)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        _as.AddRating(id, "up");
+        return "added";
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+    [HttpPut("{id}/down")]
+    [Authorize]
+    public async System.Threading.Tasks.Task<ActionResult<string>> AddRatingDown(int id)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        _as.AddRating(id, "down");
+        return "added";
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 }

@@ -73,6 +73,15 @@ namespace stackunderflow.Repositories
       _db.Execute(sql, newQuestion);
       return newQuestion;
     }
+    internal void AddRating(int id, int rating)
+    {
+      string sql = @"
+      UPDATE questions
+      SET
+      rating = @rating
+      WHERE id = @id;";
+      _db.Execute(sql, new { rating, id });
+    }
 
     internal void Delete(int id)
     {

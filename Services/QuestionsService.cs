@@ -68,5 +68,22 @@ namespace stackunderflow.Services
       _repo.Delete(id);
       return "deleted";
     }
+
+    internal void AddRating(int id, string rating)
+    {
+      Question question = _repo.Get(id);
+      if (question == null)
+      {
+        throw new Exception("invalid id");
+      }
+      if (rating == "down")
+      {
+        _repo.AddRating(id, question.Rating - 1);
+      }
+      if (rating == "up")
+      {
+        _repo.AddRating(id, question.Rating + 1);
+      }
+    }
   }
 }

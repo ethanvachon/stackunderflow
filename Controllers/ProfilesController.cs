@@ -21,6 +21,19 @@ namespace stackunderflow.Controllers
       _as = @as;
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<Profile>> GetAll()
+    {
+      try
+      {
+        return Ok(_ps.GetAll());
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
     [HttpGet("{id}")]
     public ActionResult<Profile> Get(string id)
     {

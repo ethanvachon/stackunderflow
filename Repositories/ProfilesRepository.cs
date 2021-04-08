@@ -31,5 +31,11 @@ namespace stackunderflow.Repositories
       _db.Execute(sql, userInfo);
       return userInfo;
     }
+
+    internal object GetAll()
+    {
+      string sql = "SELECT * FROM profiles";
+      return _db.Query(sql);
+    }
   }
 }

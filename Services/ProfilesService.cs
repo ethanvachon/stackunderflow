@@ -32,5 +32,10 @@ namespace stackunderflow.Services
       }
       return profile;
     }
+
+    internal object GetAll()
+    {
+      return _repo.GetAll();
+    }
   }
 }

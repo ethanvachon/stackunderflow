@@ -48,6 +48,8 @@ namespace stackunderflow
       services.AddTransient<QuestionsRepository>();
       services.AddTransient<AnswersService>();
       services.AddTransient<AnswersRepository>();
+      services.AddTransient<RatingsService>();
+      services.AddTransient<RatingsRepository>();
 
       services.AddCors(options =>
                 {

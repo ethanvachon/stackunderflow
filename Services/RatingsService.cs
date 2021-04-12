@@ -26,7 +26,8 @@ namespace stackunderflow.Services
       {
         throw new Exception("invalid rated id");
       }
-      return _repo.Create(newRating);
+      newRating.Id = _repo.Create(newRating);
+      return newRating;
     }
 
     internal void Delete(int ratingId, string id)

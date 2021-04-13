@@ -36,12 +36,12 @@ namespace stackunderflow.Controllers
       }
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     [Authorize]
-    public async Task<ActionResult<string>> Delete(int ratingId)
+    public async Task<ActionResult<string>> Delete(int followingId)
     {
       Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-      _fs.Delete(ratingId, userInfo.Id);
+      _fs.Delete(followingId, userInfo.Id);
       return Ok("success");
     }
   }

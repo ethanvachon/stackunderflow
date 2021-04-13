@@ -5,6 +5,5 @@ namespace stackunderflow.Models
     public int Id { get; set; }
     public string FollowingId { get; set; }
     public string FollowerId { get; set; }
-    public string CreatorId { get; set; }
   }
 }

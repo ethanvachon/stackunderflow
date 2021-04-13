@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using stackunderflow.Models;
 using stackunderflow.Repositories;
@@ -38,6 +39,11 @@ namespace stackunderflow.Services
         throw new Exception("cannot delete if you are not the creator");
       }
       _repo.Delete(ratingId);
+    }
+
+    internal IEnumerable<Rated> GetByProfile(string id)
+    {
+      return _repo.GetByProfile(id);
     }
   }
 }

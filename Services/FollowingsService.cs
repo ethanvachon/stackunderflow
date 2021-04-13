@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using stackunderflow.Models;
 using stackunderflow.Repositories;
@@ -39,6 +40,11 @@ namespace stackunderflow.Services
         throw new Exception("invalid creator");
       }
       _repo.Delete(followingId);
+    }
+
+    internal IEnumerable<Following> GetByProfile(string id)
+    {
+      return _repo.GetByProfile(id);
     }
   }
 }

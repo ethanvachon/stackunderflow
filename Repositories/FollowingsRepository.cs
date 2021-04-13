@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using stackunderflow.Models;
@@ -35,6 +36,12 @@ namespace stackunderflow.Repositories
     {
       string sql = "DELETE FROM following WHERE id = @id LIMIT 1;";
       _db.Execute(sql, new { id });
+    }
+
+    internal IEnumerable<Following> GetByProfile(string id)
+    {
+      string sql = "SELECT * FROM following WHERE followerId = @id;";
+      return _db.Query<Following>(sql, new { id });
     }
   }
 }

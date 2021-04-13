@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -32,5 +33,10 @@ namespace stackunderflow.Repositories
       _db.Execute(sql, new { ratingId });
     }
 
+    internal IEnumerable<Rated> GetByProfile(string id)
+    {
+      string sql = "SELECT * FROM ratings WHERE profileId = @id;";
+      return _db.Query<Rated>(sql, new { id });
+    }
   }
 }

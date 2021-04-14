@@ -34,7 +34,7 @@ namespace stackunderflow.Services
     internal void Delete(int ratingId, string id)
     {
       Rated preDelete = _repo.Get(ratingId);
-      if (preDelete.profileId != id)
+      if (preDelete.ProfileId != id)
       {
         throw new Exception("cannot delete if you are not the creator");
       }

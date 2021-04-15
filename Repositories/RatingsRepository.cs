@@ -11,6 +11,11 @@ namespace stackunderflow.Repositories
   {
     private readonly IDbConnection _db;
 
+    public RatingsRepository(IDbConnection db)
+    {
+      _db = db;
+    }
+
     internal Rated Get(int ratingId)
     {
       string sql = @"SELECT * FROM ratings WHERE id = @ratingId;";
@@ -20,9 +25,9 @@ namespace stackunderflow.Repositories
     {
       string sql = @"
       INSERT INTO ratings
-      (profileId, ratingId)
+      (profileId, ratedId)
       VALUES
-      (@profileId, @ratingId);
+      (@profileId, @ratedId);
       SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newRating);
     }

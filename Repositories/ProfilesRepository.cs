@@ -14,7 +14,7 @@ namespace stackunderflow.Repositories
       _db = db;
     }
 
-    internal Profile GetById(object id)
+    internal Profile GetById(string id)
     {
       string sql = "SELECT * FROM profiles WHERE id = @id";
       return _db.QueryFirstOrDefault<Profile>(sql, new { id });

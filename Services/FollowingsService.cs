@@ -18,7 +18,7 @@ namespace stackunderflow.Services
 
     internal Following Create(Following newFollowing)
     {
-      Profile profile = _prepo.GetById(newFollowing.FollowingId);
+      Profile profile = _prepo.GetById(newFollowing.FollowerId);
       if (profile == null)
       {
         throw new Exception("invalid profile id");

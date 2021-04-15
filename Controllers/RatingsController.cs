@@ -25,7 +25,7 @@ namespace stackunderflow.Controllers
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        newRating.profileId = userInfo.Id;
+        newRating.ProfileId = userInfo.Id;
         return _rs.Create(newRating);
       }
       catch (System.Exception e)

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
 using stackunderflow.Models;
 using stackunderflow.Repositories;
 
@@ -17,7 +16,7 @@ namespace stackunderflow.Services
       _prepo = prepo;
     }
 
-    internal ActionResult<Following> Create(Following newFollowing)
+    internal Following Create(Following newFollowing)
     {
       Profile profile = _prepo.GetById(newFollowing.FollowingId);
       if (profile == null)

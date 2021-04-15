@@ -15,10 +15,13 @@ namespace stackunderflow.Controllers
 
     private readonly AnswersService _as;
 
-    public QuestionsController(QuestionsService qs, AnswersService @as)
+    private readonly RatingsService _rs;
+
+    public QuestionsController(QuestionsService qs, AnswersService @as, RatingsService rs)
     {
       _qs = qs;
       _as = @as;
+      _rs = rs;
     }
 
     [HttpGet]
@@ -111,6 +114,20 @@ namespace stackunderflow.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    [HttpGet("{id}/ratings")]
+    public ActionResult<IEnumerable<Rated>> GetRatings(int id)
+    {
+      try
+      {
+        return Ok(_rs.GetByQuestion(id));
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
 
     [HttpPut("{id}/up")]
     [Authorize]

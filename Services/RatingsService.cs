@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
 using stackunderflow.Models;
 using stackunderflow.Repositories;
 
@@ -19,7 +18,7 @@ namespace stackunderflow.Services
       _arepo = arepo;
     }
 
-    internal ActionResult<Rated> Create(Rated newRating)
+    internal Rated Create(Rated newRating)
     {
       Question question = _qrepo.Get(newRating.RatedId);
       Answer answer = _arepo.Get(newRating.RatedId);
@@ -44,6 +43,11 @@ namespace stackunderflow.Services
     internal IEnumerable<Rated> GetByProfile(string id)
     {
       return _repo.GetByProfile(id);
+    }
+
+    internal IEnumerable<Rated> GetByQuestion(int id)
+    {
+      return _repo.GetByQuestion(id);
     }
   }
 }

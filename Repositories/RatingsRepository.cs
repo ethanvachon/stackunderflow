@@ -38,5 +38,11 @@ namespace stackunderflow.Repositories
       string sql = "SELECT * FROM ratings WHERE profileId = @id;";
       return _db.Query<Rated>(sql, new { id });
     }
+
+    internal IEnumerable<Rated> GetByQuestion(int id)
+    {
+      string sql = "SELECT * FROM ratings WHERE ratedId = @id;";
+      return _db.Query<Rated>(sql, new { id });
+    }
   }
 }

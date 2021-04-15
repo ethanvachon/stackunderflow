@@ -50,3 +50,18 @@
 --     REFERENCES questions(id)
 --     ON DELETE CASCADE
 -- )
+-- CREATE TABLE following (
+--   id int AUTO_INCREMENT NOT NULL,
+--   followerId VARCHAR(255) NOT NULL,
+--   followingId VARCHAR(255) NOT NULL,
+
+--   PRIMARY KEY(id),
+
+--   FOREIGN KEY(followingId)
+--     REFERENCES profiles(id)
+--     ON DELETE CASCADE,
+
+--   FOREIGN KEY(followerId)
+--     REFERENCES profiles(id)
+--     ON DELETE CASCADE
+-- )

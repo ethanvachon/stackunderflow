@@ -38,10 +38,10 @@ namespace stackunderflow.Controllers
 
     [HttpDelete("{id}")]
     [Authorize]
-    public async Task<ActionResult<string>> Delete(int followingId)
+    public async Task<ActionResult<string>> Delete(int id)
     {
       Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-      _fs.Delete(followingId, userInfo.Id);
+      _fs.Delete(id, userInfo.Id);
       return Ok("success");
     }
   }

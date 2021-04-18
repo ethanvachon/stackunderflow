@@ -100,5 +100,29 @@ namespace stackunderflow.Controllers
         return BadRequest(e.Message);
       }
     }
+    [HttpGet("{id}/questionfeed")]
+    public ActionResult<IEnumerable<Rated>> GetQuestionFeed(string id)
+    {
+      try
+      {
+        return Ok(_fs.GetQuestionFeed(id));
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+    [HttpGet("{id}/answerfeed")]
+    public ActionResult<IEnumerable<Rated>> GetAnswerFeed(string id)
+    {
+      try
+      {
+        return Ok(_fs.GetAnswerFeed(id));
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 }

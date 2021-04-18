@@ -29,7 +29,7 @@ namespace stackunderflow.Repositories
     internal Following Get(int id)
     {
       string sql = "SELECT * FROM following WHERE id = @id;";
-      return _db.QueryFirstOrDefault(sql, new { id });
+      return _db.QueryFirstOrDefault<Following>(sql, new { id });
     }
 
     internal void Delete(int id)

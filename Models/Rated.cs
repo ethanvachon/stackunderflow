@@ -6,5 +6,7 @@ namespace stackunderflow.Models
     public string ProfileId { get; set; }
     public int RatedId { get; set; }
 
+    public bool Rating { get; set; }
+
   }
 }

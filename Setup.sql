@@ -39,6 +39,7 @@
 --   id int AUTO_INCREMENT NOT NULL,
 --   profileId VARCHAR(255),
 --   ratedId int NOT NULL,
+--   rating BOOLEAN NOT NULL,
 
 --   PRIMARY KEY(id),
 

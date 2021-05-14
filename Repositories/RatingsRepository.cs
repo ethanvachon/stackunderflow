@@ -25,9 +25,9 @@ namespace stackunderflow.Repositories
     {
       string sql = @"
       INSERT INTO ratings
-      (profileId, ratedId)
+      (profileId, ratedId, rating)
       VALUES
-      (@profileId, @ratedId);
+      (@profileId, @ratedId, @rating);
       SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newRating);
     }

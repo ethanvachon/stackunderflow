@@ -37,5 +37,10 @@ namespace stackunderflow.Services
     {
       return _repo.GetAll();
     }
+
+    internal Profile Edit(Profile newProfile)
+    {
+      return _repo.Edit(newProfile);
+    }
   }
 }

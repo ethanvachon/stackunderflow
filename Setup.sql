@@ -51,6 +51,24 @@
 --     REFERENCES questions(id)
 --     ON DELETE CASCADE
 -- )
+
+-- CREATE TABLE ratings (
+--   id int AUTO_INCREMENT NOT NULL,
+--   profileId VARCHAR(255),
+--   answerId int NOT NULL,
+--   rating BOOLEAN NOT NULL,
+
+--   PRIMARY KEY(id),
+
+--   FOREIGN KEY(profileId)
+--     REFERENCES profiles(id)
+--     ON DELETE CASCADE,
+
+--   FOREIGN KEY(answerId)
+--     REFERENCES answers(id)
+--     ON DELETE CASCADE
+-- )
+
 -- CREATE TABLE following (
 --   id int AUTO_INCREMENT NOT NULL,
 --   followerId VARCHAR(255) NOT NULL,

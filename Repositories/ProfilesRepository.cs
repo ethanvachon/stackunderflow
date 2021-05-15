@@ -37,5 +37,16 @@ namespace stackunderflow.Repositories
       string sql = "SELECT * FROM profiles";
       return _db.Query(sql);
     }
+
+    internal Profile Edit(Profile newProfile)
+    {
+      string sql = @"
+      UPDATE profiles
+      SET
+      name = @Name
+      WHERE id = @id;";
+      _db.Execute(sql, newProfile);
+      return newProfile;
+    }
   }
 }

@@ -50,6 +50,8 @@ namespace stackunderflow
       services.AddTransient<AnswersRepository>();
       services.AddTransient<RatingsService>();
       services.AddTransient<RatingsRepository>();
+      services.AddTransient<AnswerRatingsService>();
+      services.AddTransient<AnswerRatingsRepository>();
       services.AddTransient<FollowingsService>();
       services.AddTransient<FollowingsRepository>();
 

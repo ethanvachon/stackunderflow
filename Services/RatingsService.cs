@@ -21,8 +21,7 @@ namespace stackunderflow.Services
     internal Rated Create(Rated newRating)
     {
       Question question = _qrepo.Get(newRating.RatedId);
-      Answer answer = _arepo.Get(newRating.RatedId);
-      if (question == null && answer == null)
+      if (question == null)
       {
         throw new Exception("invalid rated id");
       }

@@ -13,9 +13,12 @@ namespace stackunderflow.Controllers
   {
     private readonly AnswersService _as;
 
-    public AnswersController(AnswersService @as)
+    private readonly AnswerRatingsService _ars;
+
+    public AnswersController(AnswersService @as, AnswerRatingsService ars)
     {
       _as = @as;
+      _ars = ars;
     }
 
     [HttpGet]
@@ -120,6 +123,19 @@ namespace stackunderflow.Controllers
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         _as.AddRating(id, "down");
         return "added";
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("{id}/ratings")]
+    public ActionResult<IEnumerable<AnswerRating>> GetAnswerRatings(int id)
+    {
+      try
+      {
+        return Ok(_ars.GetByAnswer(id));
       }
       catch (System.Exception e)
       {

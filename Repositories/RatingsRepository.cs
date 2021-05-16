@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using Dapper;
-using Microsoft.AspNetCore.Mvc;
 using stackunderflow.Models;
 
 namespace stackunderflow.Repositories

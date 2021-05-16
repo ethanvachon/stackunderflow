@@ -34,14 +34,14 @@ namespace stackunderflow.Controllers
         }
       }
 
-      [HttpDelete]
-      [Authorize]
-      public async Task<ActionResult<string>> Delete(int ratingId)
-      {
-        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        _ars.Delete(ratingId, userInfo.Id);
-        return Ok("success");
-      }
+      //   [HttpDelete]
+      //   [Authorize]
+      //   public async Task<ActionResult<string>> Delete(int ratingId)
+      //   {
+      //     Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+      //     _ars.Delete(ratingId, userInfo.Id);
+      //     return Ok("success");
+      //   }
     }
   }
 }

@@ -17,14 +17,16 @@ namespace stackunderflow.Controllers
     private readonly AnswersService _as;
     private readonly RatingsService _rs;
     private readonly FollowingsService _fs;
+    private readonly AnswerRatingsService _ars;
 
-    public ProfilesController(ProfilesService ps, QuestionsService qs, AnswersService @as, RatingsService rs, FollowingsService fs)
+    public ProfilesController(ProfilesService ps, QuestionsService qs, AnswersService @as, RatingsService rs, FollowingsService fs, AnswerRatingsService ars)
     {
       _ps = ps;
       _qs = qs;
       _as = @as;
       _rs = rs;
       _fs = fs;
+      _ars = ars;
     }
 
     [HttpGet]
@@ -112,6 +114,18 @@ namespace stackunderflow.Controllers
       try
       {
         return Ok(_rs.GetByProfile(id));
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+    [HttpGet("{id}/aratings")]
+    public ActionResult<IEnumerable<Rated>> GetAnswerRatings(string id)
+    {
+      try
+      {
+        return Ok(_ars.GetByProfile(id));
       }
       catch (System.Exception e)
       {

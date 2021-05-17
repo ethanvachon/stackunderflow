@@ -43,6 +43,7 @@ namespace stackunderflow.Repositories
       string sql = @"
       UPDATE profiles
       SET
+      picture = @Picture,
       name = @Name
       WHERE id = @id;";
       _db.Execute(sql, newProfile);

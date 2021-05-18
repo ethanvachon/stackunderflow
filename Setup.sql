@@ -1,5 +1,15 @@
 -- USE finaldatabase2;
 
+-- CREATE TABLE profiles
+-- (
+--   id VARCHAR(255) NOT NULL,
+--   email VARCHAR(255) NOT NULL,
+--   name VARCHAR(255),
+--   picture VARCHAR(255),
+--   rating INT,
+--   PRIMARY KEY (id)
+-- );
+
 -- CREATE TABLE questions (
 --   id int AUTO_INCREMENT NOT NULL,
 --   title VARCHAR(1000) NOT NULL,
@@ -52,7 +62,7 @@
 --     ON DELETE CASCADE
 -- )
 
--- CREATE TABLE ratings (
+-- CREATE TABLE answerratings (
 --   id int AUTO_INCREMENT NOT NULL,
 --   profileId VARCHAR(255),
 --   answerId int NOT NULL,

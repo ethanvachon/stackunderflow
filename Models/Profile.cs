@@ -12,5 +12,6 @@ namespace stackunderflow.Models
     public string Email { get; set; }
     [Required]
     public string Picture { get; set; }
+    public int Rating { get; set; }
   }
 }

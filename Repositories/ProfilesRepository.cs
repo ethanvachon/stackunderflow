@@ -49,5 +49,15 @@ namespace stackunderflow.Repositories
       _db.Execute(sql, newProfile);
       return newProfile;
     }
+
+    internal void AddRating(Profile newProfile)
+    {
+      string sql = @"
+      UPDATE profiles
+      SET
+      rating = @rating
+      WHERE id = @id;";
+      _db.Execute(sql, newProfile);
+    }
   }
 }

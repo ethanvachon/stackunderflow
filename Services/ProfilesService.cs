@@ -42,5 +42,12 @@ namespace stackunderflow.Services
     {
       return _repo.Edit(newProfile);
     }
+
+    internal void AddRating(string id)
+    {
+      Profile pr = _repo.GetById(id);
+      pr.Rating = pr.Rating + 1;
+      _repo.AddRating(pr);
+    }
   }
 }

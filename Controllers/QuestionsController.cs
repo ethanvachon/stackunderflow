@@ -16,12 +16,14 @@ namespace stackunderflow.Controllers
     private readonly AnswersService _as;
 
     private readonly RatingsService _rs;
+    private readonly ProfilesService _prs;
 
-    public QuestionsController(QuestionsService qs, AnswersService @as, RatingsService rs)
+    public QuestionsController(QuestionsService qs, AnswersService @as, RatingsService rs, ProfilesService prs)
     {
       _qs = qs;
       _as = @as;
       _rs = rs;
+      _prs = prs;
     }
 
     [HttpGet]
@@ -137,6 +139,7 @@ namespace stackunderflow.Controllers
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         _qs.AddRating(id, "up");
+        _prs.AddRating(userInfo.Id);
         return "added";
       }
       catch (System.Exception e)

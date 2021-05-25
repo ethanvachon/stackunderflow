@@ -1,0 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace stackunderflow.Models
+{
+  public class Message
+  {
+    [Required]
+    public int Id { get; set; }
+    [Required]
+    public string Body { get; set; }
+    [Required]
+    public int ChatId { get; set; }
+    [Required]
+    public int CreatorId { get; set; }
+  }
+}

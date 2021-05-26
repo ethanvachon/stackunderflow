@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
 using Microsoft.AspNetCore.Authorization;
@@ -12,10 +13,12 @@ namespace stackunderflow.Controllers
   public class ChatsController : ControllerBase
   {
     private readonly ChatsService _cs;
+    private readonly MessagesService _ms;
 
-    public ChatsController(ChatsService cs)
+    public ChatsController(ChatsService cs, MessagesService ms)
     {
       _cs = cs;
+      _ms = ms;
     }
 
     [HttpPost]
@@ -36,9 +39,31 @@ namespace stackunderflow.Controllers
     [Authorize]
     public async Task<ActionResult<string>> Delete(int id)
     {
-      Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-      _cs.Delete(id, userInfo.Id);
-      return Ok("success");
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        _cs.Delete(id, userInfo.Id);
+        return Ok("success");
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+
+    }
+
+    [HttpGet("{id}/messages")]
+    [Authorize]
+    public ActionResult<IEnumerable<Message>> GetMessages(int id)
+    {
+      try
+      {
+        return Ok(_ms.GetByChat(id));
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
     }
   }
 }

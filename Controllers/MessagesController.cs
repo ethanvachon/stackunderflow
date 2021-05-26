@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Mvc;
 using stackunderflow.Services;
 
 namespace stackunderflow.Controllers
 {
-  public class MessagesController
+  [ApiController]
+  [Route("api/[controller]")]
+  public class MessagesController : ControllerBase
   {
     private readonly MessagesService _ms;
 

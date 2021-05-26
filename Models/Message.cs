@@ -4,7 +4,6 @@ namespace stackunderflow.Models
 {
   public class Message
   {
-    [Required]
     public int Id { get; set; }
     [Required]
     public string Body { get; set; }

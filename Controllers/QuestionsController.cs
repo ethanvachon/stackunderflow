@@ -8,7 +8,7 @@ using stackunderflow.Services;
 namespace stackunderflow.Controllers
 {
   [ApiController]
-  [Route("api/Questions")]
+  [Route("api/[controller]")]
   public class QuestionsController : ControllerBase
   {
     private readonly QuestionsService _qs;

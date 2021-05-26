@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Dapper;
 using stackunderflow.Models;
 
@@ -40,8 +41,14 @@ namespace stackunderflow.Repositories
 
     internal IEnumerable<Following> GetByProfile(string id)
     {
-      string sql = "SELECT * FROM following WHERE followerId = @id;";
-      return _db.Query<Following>(sql, new { id });
+      string sql = @"
+      SELECT 
+      f.*,
+      pr.*
+      FROM following f
+      JOIN profiles pr ON f.followingId = pr.id
+      WHERE f.followerId = @id";
+      return _db.Query<Following, Profile, Following>(sql, (following, profile) => { following.User = profile; return following; }, new { id }, splitOn: "id");
     }
   }
 }

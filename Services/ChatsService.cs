@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using stackunderflow.Models;
 using stackunderflow.Repositories;
@@ -17,7 +18,12 @@ namespace stackunderflow.Services
     internal Chat Create(Chat newChat)
     {
       newChat.Id = _crepo.Create(newChat);
-      return newChat;
+      Chat original = newChat;
+      string temp = newChat.ParticipantOne;
+      newChat.ParticipantOne = newChat.ParticipantTwo;
+      newChat.ParticipantTwo = temp;
+      _crepo.Create(newChat);
+      return original;
     }
 
     internal void Delete(int id, string userId)
@@ -35,6 +41,11 @@ namespace stackunderflow.Services
       {
         throw new Exception("cannot end chat user is not in");
       }
+    }
+
+    internal IEnumerable<Chat> GetByProfile(string id)
+    {
+      return _crepo.GetByProfile(id);
     }
   }
 }

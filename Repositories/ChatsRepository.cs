@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -17,15 +18,8 @@ namespace stackunderflow.Repositories
 
     internal Chat GetOne(int id)
     {
-      string sql = @"
-      SELECT 
-      c.*,
-      pr.*
-      FROM chats c
-      JOIN profiles pr ON c.participantOne = pr.id
-      JOIN profiles pr ON c.participantTwo = pr.id
-      WHERE a.Id = @id";
-      return _db.Query<Chat, Profile, Profile, Chat>(sql, (chat, profile, profileTwo) => { chat.UserOne = profile; chat.UserTwo = profileTwo; return chat; }, new { id }, splitOn: "id").FirstOrDefault();
+      string sql = "SELECT * FROM chats WHERE id = @id";
+      return _db.QueryFirstOrDefault<Chat>(sql, new { id });
     }
 
     internal int Create(Chat newChat)
@@ -38,6 +32,19 @@ namespace stackunderflow.Repositories
       SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newChat);
     }
+
+    internal IEnumerable<Chat> GetByProfile(string id)
+    {
+      string sql = @"
+      SELECT 
+      c.*,
+      pr.*
+      FROM chats c
+      JOIN profiles pr ON c.participantTwo = pr.id
+      WHERE c.participantOne = @id";
+      return _db.Query<Chat, Profile, Chat>(sql, (chat, profile) => { chat.User = profile; return chat; }, new { id }, splitOn: "id");
+    }
+
     internal void Delete(int id)
     {
       string sql = "DELETE FROM chats WHERE id = @id LIMIT 1;";

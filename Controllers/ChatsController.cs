@@ -24,7 +24,7 @@ namespace stackunderflow.Controllers
     {
       try
       {
-        return _cs.Create(newChat);
+        return Ok(_cs.Create(newChat));
       }
       catch (System.Exception e)
       {

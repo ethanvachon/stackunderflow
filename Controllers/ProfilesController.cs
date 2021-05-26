@@ -18,8 +18,9 @@ namespace stackunderflow.Controllers
     private readonly RatingsService _rs;
     private readonly FollowingsService _fs;
     private readonly AnswerRatingsService _ars;
+    private readonly ChatsService _cs;
 
-    public ProfilesController(ProfilesService ps, QuestionsService qs, AnswersService @as, RatingsService rs, FollowingsService fs, AnswerRatingsService ars)
+    public ProfilesController(ProfilesService ps, QuestionsService qs, AnswersService @as, RatingsService rs, FollowingsService fs, AnswerRatingsService ars, ChatsService cs)
     {
       _ps = ps;
       _qs = qs;
@@ -27,6 +28,7 @@ namespace stackunderflow.Controllers
       _rs = rs;
       _fs = fs;
       _ars = ars;
+      _cs = cs;
     }
 
     [HttpGet]
@@ -150,6 +152,18 @@ namespace stackunderflow.Controllers
       try
       {
         return Ok(_fs.GetAnswerFeed(id));
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+    [HttpGet("{id}/chats")]
+    public ActionResult<IEnumerable<Chat>> GetChats(string id)
+    {
+      try
+      {
+        return Ok(_cs.GetByProfile(id));
       }
       catch (System.Exception e)
       {

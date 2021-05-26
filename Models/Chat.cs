@@ -9,7 +9,6 @@ namespace stackunderflow.Models
     public string ParticipantOne { get; set; }
     [Required]
     public string ParticipantTwo { get; set; }
-    public Profile UserOne { get; set; }
-    public Profile UserTwo { get; set; }
+    public Profile User { get; set; }
   }
 }

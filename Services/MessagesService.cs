@@ -1,3 +1,5 @@
+using System;
+using stackunderflow.Models;
 using stackunderflow.Repositories;
 
 namespace stackunderflow.Services
@@ -9,6 +11,12 @@ namespace stackunderflow.Services
     public MessagesService(MessagesRepository mrepo)
     {
       _mrepo = mrepo;
+    }
+
+    internal Message Create(Message newMessage)
+    {
+      newMessage.Id = _mrepo.Create(newMessage);
+      return newMessage;
     }
   }
 }

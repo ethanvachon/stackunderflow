@@ -18,7 +18,7 @@ namespace stackunderflow.Repositories
     internal int Create(Message newMessage)
     {
       string sql = @"
-      INSERT INTO chats
+      INSERT INTO messages
       (body, chatId, creatorId)
       VALUES
       (@Body, @ChatId, @CreatorId);

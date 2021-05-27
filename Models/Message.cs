@@ -10,7 +10,7 @@ namespace stackunderflow.Models
     [Required]
     public int ChatId { get; set; }
     [Required]
-    public int CreatorId { get; set; }
+    public string CreatorId { get; set; }
     public Profile Creator { get; set; }
   }
 }

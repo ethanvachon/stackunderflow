@@ -27,8 +27,9 @@ namespace stackunderflow.Services
       }
       if (_repo.SafetyGet(newRating) == null)
       {
-        newRating.Id = _repo.Create(newRating);
+        throw new Exception("rating already exists");
       }
+      newRating.Id = _repo.Create(newRating);
       return newRating;
     }
 

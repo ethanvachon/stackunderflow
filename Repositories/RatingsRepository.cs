@@ -31,6 +31,16 @@ namespace stackunderflow.Repositories
       return _db.ExecuteScalar<int>(sql, newRating);
     }
 
+    internal IEnumerable<Rated> SafetyGet(Rated rating)
+    {
+      string sql = @"
+      SELECT *
+      FROM ratings r
+      WHERE r.profileId = rating.ProfileId
+      AND r.ratedId = rating.RatedId";
+      return _db.Query<Rated>(sql, rating);
+    }
+
     internal void Delete(int ratingId)
     {
       string sql = "DELETE * FROM ratings WHERE id = @ratingId LIMIT 1;";

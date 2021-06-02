@@ -25,7 +25,10 @@ namespace stackunderflow.Services
       {
         throw new Exception("invalid rated id");
       }
-      newRating.Id = _repo.Create(newRating);
+      if (_repo.SafetyGet(newRating) == null)
+      {
+        newRating.Id = _repo.Create(newRating);
+      }
       return newRating;
     }
 

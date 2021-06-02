@@ -31,6 +31,16 @@ namespace stackunderflow.Repositories
       return _db.Query<AnswerRating>(sql, new { id });
     }
 
+    internal object SafetyGet(AnswerRating rating)
+    {
+      string sql = @"
+      SELECT *
+      FROM ratings r
+      WHERE r.profileId = rating.ProfileId
+      AND r.ratedId = rating.RatedId";
+      return _db.Query<Rated>(sql, rating);
+    }
+
     internal IEnumerable<AnswerRating> GetByAnswer(int id)
     {
       string sql = "SELECT * FROM answerratings WHERE answerId = @id";

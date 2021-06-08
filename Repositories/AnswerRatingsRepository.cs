@@ -31,14 +31,14 @@ namespace stackunderflow.Repositories
       return _db.Query<AnswerRating>(sql, new { id });
     }
 
-    internal object SafetyGet(AnswerRating rating)
+    internal AnswerRating SafetyGet(AnswerRating rating)
     {
       string sql = @"
       SELECT *
       FROM ratings r
-      WHERE r.profileId = rating.ProfileId
-      AND r.ratedId = rating.RatedId";
-      return _db.Query<Rated>(sql, rating);
+      WHERE r.profileId = @profileId
+      AND r.ratedId = @answerId";
+      return _db.QueryFirstOrDefault<AnswerRating>(sql, rating);
     }
 
     internal IEnumerable<AnswerRating> GetByAnswer(int id)

@@ -25,7 +25,8 @@ namespace stackunderflow.Services
       {
         throw new Exception("invalid rated id");
       }
-      if (_repo.SafetyGet(newRating) == null)
+      Rated rating = _repo.SafetyGet(newRating);
+      if (rating != null)
       {
         throw new Exception("rating already exists");
       }
